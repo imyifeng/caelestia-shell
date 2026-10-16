@@ -1,0 +1,85 @@
+# caelestia-shell-imyifeng
+
+# Maintainer: imyifeng <imyifeng@users.noreply.github.com>
+# Based on the official caelestia-shell AUR package
+
+pkgname='caelestia-shell-imyifeng'
+pkgver=2.5.0.r2688.gedbf1757
+pkgrel=1
+pkgdesc='The desktop shell for the Caelestia dotfiles (imyifeng custom build: zh_CN localized)'
+arch=('x86_64' 'aarch64')
+url='https://github.com/imyifeng/caelestia-shell'
+license=('GPL-3.0-only')
+depends=(
+    'caelestia-cli'
+    'quickshell-git'
+    'glibc'
+    'gcc-libs'
+
+    # Brightness
+    'ddcutil'
+    'brightnessctl'
+
+    # Services
+    'libcava'
+    'networkmanager'
+    'lm_sensors'
+    'aubio'
+    'libpipewire'
+    'libqalculate'
+    'power-profiles-daemon'
+
+    # Fonts
+    'ttf-material-symbols-variable'
+    'ttf-rubik-vf'
+    'ttf-cascadia-code-nerd'
+
+    # Qt modules
+    'qt6-base'
+    'qt6-declarative'
+    'qt6-imageformats'
+    'qt6-m3shapes-git'
+
+    # Extra functionality
+    'swappy'
+    'zsh'
+    'bash'
+)
+optdepends=(
+    'asdbctl: controlling the brightness of Apple Studio Displays'
+    'fprintd: fingerprint unlock for the lock screen'
+    'howdy-next: face unlock for the lock screen'
+)
+# fish/gettext: trs.fish compiles the bundled zh_CN.po at build time
+makedepends=('git' 'cmake' 'ninja' 'qt6-shadertools' 'fish' 'gettext')
+provides=('caelestia-shell')
+conflicts=('caelestia-shell' 'caelestia-shell-git')
+source=("$pkgname::git+https://github.com/imyifeng/caelestia-shell.git")
+sha256sums=('SKIP')
+
+pkgver() {
+    cd "$pkgname"
+
+    local tag
+    tag=$(git describe --tags --abbrev=0 2>/dev/null) || tag='v2.5.0'
+    printf '%s.r%s.g%s' "${tag#v}" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
+}
+
+build() {
+    cd "$pkgname"
+
+    cmake -B build -G Ninja \
+        -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+        -DCMAKE_INSTALL_PREFIX=/ \
+        -DVERSION="${pkgver%%.r*}" \
+        -DGIT_REVISION="$(git rev-parse HEAD)" \
+        -DDISTRIBUTOR="AUR (package: ${pkgname})"
+    cmake --build build
+}
+
+package() {
+    cd "$pkgname"
+
+    DESTDIR="$pkgdir" cmake --install build
+    install -Dm644 LICENSE "$pkgdir"/usr/share/licenses/$pkgname/LICENSE
+}

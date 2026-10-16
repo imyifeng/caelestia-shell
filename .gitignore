@@ -4,5 +4,10 @@
 build/
 .cache/
 logs
+/aur/src/
+/aur/pkg/
+/aur/*.pkg.tar.zst
+/aur/.SRCINFO
+/aur/caelestia-shell-imyifeng/
 
 /plugin/src/Caelestia/I18n/trs/raw.pot

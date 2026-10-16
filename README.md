@@ -1,3 +1,7 @@
+> [!NOTE]
+> 本仓库为**个人自用修改版**，在上游 [caelestia-dots/shell](https://github.com/caelestia-dots/shell) 的基础上进行了个人定制，文档均已汉化。
+> 因此与上游可能存在差异，通用功能与更新请以上游仓库为准。
+
 <h1 align=center>caelestia-shell</h1>
 
 <div align=center>
@@ -12,39 +16,39 @@
 
 https://github.com/user-attachments/assets/0840f496-575c-4ca6-83a8-87bb01a85c5f
 
-## Components
+## 组件
 
-- Widgets: [`Quickshell`](https://quickshell.outfoxxed.me)
-- Window manager: [`Hyprland`](https://hypr.land)
-- Dots: [`caelestia`][dots-repo]
+- 界面组件：[`Quickshell`](https://quickshell.outfoxxed.me)
+- 窗口管理器：[`Hyprland`](https://hypr.land)
+- 配置文件：[`caelestia`][dots-repo]
 
-## Installation
+## 安装
 
 > [!NOTE]
-> This repo is for Caelestia's desktop shell only. If you want installation instructions
-> for the entire dotfiles (which include this shell), head to [the main repo][dots-repo] instead.
+> 本仓库仅包含 Caelestia 的桌面 shell。如果你想了解整个 dotfiles（内含本 shell）
+> 的安装说明，请前往[主仓库][dots-repo]。
 
 ### Arch Linux
 
 > [!WARNING]
-> If you want to make your own changes/tweaks to the shell, do NOT edit the files installed by the AUR
-> package. Instead, follow the instructions in the [manual installation section](#manual-installation).
+> 如果你想对 shell 做自己的修改/调整，请**不要**直接编辑 AUR 软件包安装的文件，
+> 而是按照[手动安装](#手动安装)一节的说明操作。
 
-The shell is available from the AUR as `caelestia-shell`. You can install it with an AUR helper (recommended),
-like [`paru`](https://github.com/morganamilo/paru), or by manually downloading the PKGBUILD and running `makepkg -si`.
+Shell 已发布到 AUR，包名为 `caelestia-shell`。推荐使用 AUR 助手安装，
+例如 [`paru`](https://github.com/morganamilo/paru)，也可以手动下载 PKGBUILD 后执行 `makepkg -si`。
 
-A package following the latest commit also exists as `caelestia-shell-git`. This is bleeding-edge
-and likely to be unstable/have bugs. Regular users are recommended to use the stable package (`caelestia-shell`).
+AUR 中还有跟随最新提交的 `caelestia-shell-git` 包。它处于最前沿，可能不稳定或有 bug。
+普通用户建议使用稳定包（`caelestia-shell`）。
 
 ### Nix
 
-You can run the shell directly via `nix run`:
+可以通过 `nix run` 直接运行 shell：
 
 ```sh
 nix run github:caelestia-dots/shell#with-cli
 ```
 
-Or add it to your system configuration:
+或将其加入你的系统配置：
 
 ```nix
 {
@@ -59,19 +63,20 @@ Or add it to your system configuration:
 }
 ```
 
-For full functionality, use `caelestia-shell.packages.<system>.with-cli`, which can be added to your
-`environment.systemPackages`, `users.users.<username>.packages`, `home.packages` if using home-manager,
-or a devshell. The `default` package does not include the CLI.
-You can then run the shell with `caelestia-shell`.
+要获得完整功能，请使用 `caelestia-shell.packages.<system>.with-cli`，它可以加入
+`environment.systemPackages`、`users.users.<username>.packages`，使用 home-manager 时加入 `home.packages`，
+或加入 devshell。`default` 包不包含 CLI。
+之后即可使用 `caelestia-shell` 启动 shell。
 
-For home-manager, you can also use Caelestia's Home Manager module (explained in [the configuration section](#home-manager-module)), which installs and configures the shell and CLI.
+对于 home-manager 用户，还可以使用 Caelestia 的 Home Manager 模块（见[配置](#home-manager-模块)一节），
+它会安装并配置 shell 和 CLI。
 
-### Manual installation
+### 手动安装
 
-Dependencies:
+依赖：
 
 - [`caelestia-cli`](https://github.com/caelestia-dots/cli)
-- [`quickshell-git`](https://git.outfoxxed.me/quickshell/quickshell) - this has to be the git version, not the latest tagged version
+- [`quickshell-git`](https://git.outfoxxed.me/quickshell/quickshell) - 必须使用 git 版本，而非最新的正式tag版本
 - `glibc`
 - `gcc-libs`
 - [`ddcutil`](https://github.com/rockowitz/ddcutil)
@@ -94,18 +99,18 @@ Dependencies:
 - [`fish`](https://github.com/fish-shell/fish-shell)
 - [`bash`](https://www.gnu.org/software/bash)
 
-Build dependencies:
+构建依赖：
 
 - [`cmake`](https://gitlab.kitware.com/cmake/cmake)
 - [`ninja`](https://github.com/ninja-build/ninja)
 - `qt6-shadertools`
 
 > [!IMPORTANT]
-> The commands below (and in the "Updating" section) assume `$XDG_CONFIG_HOME` is set.
-> If it is unset, substitute it with the path to your config folder (typically `~/.config`).
+> 下面的命令（以及“更新”一节中的命令）假设已设置 `$XDG_CONFIG_HOME`。
+> 如果未设置，请将其替换为你的配置目录路径（通常是 `~/.config`）。
 
-To install the shell manually, install all dependencies and clone this repo to `$XDG_CONFIG_HOME/quickshell/caelestia`.
-Then build and install using CMake.
+手动安装 shell 时，请先安装所有依赖，然后将本仓库克隆到 `$XDG_CONFIG_HOME/quickshell/caelestia`，
+再使用 CMake 构建并安装。
 
 ```sh
 cd $XDG_CONFIG_HOME/quickshell
@@ -118,12 +123,11 @@ sudo cmake --install build
 ```
 
 > [!TIP]
-> You can customise the installation location via the CMake flags `INSTALL_LIBDIR`, `INSTALL_QMLDIR`, and
-> `INSTALL_QSCONFDIR` for the libraries (e.g. the version helper), QML plugin, and Quickshell config directories
-> respectively. If you set the `INSTALL_LIBDIR` flag, the `CAELESTIA_LIB_DIR` variable must also be set to
-> the same directory in your system's environment.
+> 你可以通过 CMake 开关 `INSTALL_LIBDIR`、`INSTALL_QMLDIR` 和 `INSTALL_QSCONFDIR`
+> 自定义库（例如版本助手）、QML 插件和 Quickshell 配置目录的安装位置。如果设置了
+> `INSTALL_LIBDIR` 开关，还必须在系统环境变量中把 `CAELESTIA_LIB_DIR` 变量设置为同一目录。
 >
-> For example, installing to `~/.config/quickshell/caelestia` for easy local changes:
+> 例如，安装到 `~/.config/quickshell/caelestia` 以便本地修改：
 >
 > ```sh
 > mkdir -p ~/.config/quickshell/caelestia
@@ -133,81 +137,76 @@ sudo cmake --install build
 > sudo chown -R $USER ~/.config/quickshell/caelestia
 > ```
 
-## Usage
+## 用法
 
-You can start the shell by running `caelestia shell -d` (preferred) or `qs -c caelestia -n -d`.
-You may omit `-d` from the command to keep the shell attached to the current terminal if necessary,
-though you likely want it to be detached (so it doesn't close when the terminal is closed).
+可以通过 `caelestia shell -d`（推荐）或 `qs -c caelestia -n -d` 启动 shell。
+如有需要，可以省略 `-d` 让 shell 附加在当前终端上运行，
+不过你多半希望它以守护进程方式运行（这样关闭终端时 shell 不会退出）。
 
-If using the [Caelestia dotfiles][dots-repo], the shell will be autostarted on login
-via a `hl.on("hyprland.start", ...)` function in the Hyprland config.
+如果使用 [Caelestia dotfiles][dots-repo]，shell 会在登录时通过 Hyprland 配置中的
+`hl.on("hyprland.start", ...)` 函数自动启动。
 
-### Shortcuts/IPC
+### 快捷键 / IPC
 
-All keybinds are accessible via Hyprland [global shortcuts](https://wiki.hypr.land/Configuring/Basics/Binds/#dbus-global-shortcuts).
-If using the [Caelestia dotfiles][dots-repo], the keybinds are already configured for you.
-Otherwise, the [`keybinds.lua`](https://github.com/caelestia-dots/caelestia/blob/main/hypr/hyprland/keybinds.lua#L63-L67) file
-contains an example of how to use global shortcuts.
+所有快捷键都可以通过 Hyprland [全局快捷键](https://wiki.hypr.land/Configuring/Basics/Binds/#dbus-global-shortcuts)访问。
+如果使用 [Caelestia dotfiles][dots-repo]，这些快捷键已经为你配置好了。
+否则，可以参考 [`keybinds.lua`](https://github.com/caelestia-dots/caelestia/blob/main/hypr/hyprland/keybinds.lua#L63-L67) 文件中
+使用全局快捷键的示例。
 
-All IPC commands can be accessed via `caelestia shell ...`, for example:
+所有 IPC 命令都可以通过 `caelestia shell ...` 访问，例如：
 
 ```sh
 caelestia shell mpris getActive trackTitle
 ```
 
-You can view the list of available IPC commands by running `caelestia shell -s`.
+运行 `caelestia shell -s` 可以查看可用 IPC 命令列表。
 
-### PFP/Wallpapers
+### 头像 / 壁纸
 
-The profile picture for the dashboard is read from the file `~/.face`. You can set it by clicking it in the dashboard,
-or by manually copying or symlinking your image to the path.
+仪表盘的头像读取自 `~/.face` 文件。你可以在仪表盘中点击头像进行设置，
+也可以手动把图片复制或符号链接到该路径。
 
-The wallpapers for the wallpaper switcher are read from `~/Pictures/Wallpapers`
-by default. To change it, modify `paths.wallpaperDir` in `~/.config/caelestia/shell.json`.
+壁纸切换器的壁纸默认读取自 `~/Pictures/Wallpapers`。如需更改，
+请修改 `~/.config/caelestia/shell.json` 中的 `paths.wallpaperDir`。
 
-To set the wallpaper, you can type `>wallpaper` in the launcher to open the wallpaper switcher.
-Alternatively, you can also use `caelestia wallpaper -f <path_to_wallpaper>` to set the wallpaper directly.
-Use `caelestia wallpaper -h` for more info about this command.
+要设置壁纸，可以在启动器中输入 `>wallpaper` 打开壁纸切换器。
+此外，也可以使用 `caelestia wallpaper -f <壁纸路径>` 直接设置壁纸。
+使用 `caelestia wallpaper -h` 可以查看此命令的更多信息。
 
-## Updating
+## 更新
 
-### Packaged install (AUR)
+### 软件包安装（AUR）
 
-If using the full dotfiles or the CLI, run `caelestia update` to perform a full system update and
-update the dots.
-Otherwise, if you installed the shell on its own, update your system using your AUR helper (e.g., `paru`).
+如果使用完整的 dotfiles 或 CLI，运行 `caelestia update` 即可完成系统更新并更新 dots。
+如果你只单独安装了 shell，请使用 AUR 助手（如 `paru`）更新系统。
 
-### Manual install
+### 手动安装
 
-If you installed the shell manually by cloning the repo, you can update by pulling the changes from git
-in the local checkout.
+如果你是通过克隆仓库手动安装的 shell，可以在本地检出中拉取 git 更新。
 
-For example, if you installed to `$XDG_CONFIG_HOME/quickshell/caelestia`:
+例如，如果安装到了 `$XDG_CONFIG_HOME/quickshell/caelestia`：
 
 ```sh
 cd $XDG_CONFIG_HOME/quickshell/caelestia
 git pull
 ```
 
-## Configuring
+## 配置
 
-All configuration options belong in `~/.config/caelestia/shell.json`. This file is _not_ created by
-default; you must create it manually. Options that you omit from the config file will use their default
-values.
+所有配置选项都放在 `~/.config/caelestia/shell.json` 中。此文件默认**不会**创建，需要你手动创建。配置文件中未写明的选项将使用各自的默认值。
 
-### Per-monitor configuration
+### 每显示器配置
 
-You can configure per-monitor options in `~/.config/caelestia/monitors/<monitor_name>/shell.json`.
-List the names of your available monitors by running:
+你可以在 `~/.config/caelestia/monitors/<显示器名>/shell.json` 中配置每显示器的选项。
+运行以下命令列出可用显示器的名称：
 
 ```sh
 hyprctl monitors -j | jq -r '.[].name'
 ```
 
-Options set in these files will **override** the respective options in the global config. Any options not present in
-per-monitor configs will inherit their values from the global config.
+这些文件中设置的选项会**覆盖**全局配置中的相应选项。每显示器配置中未出现的选项将继承全局配置中的值。
 
-For example, to automatically hide the bar on the monitor named `DP-1`:
+例如，要让名为 `DP-1` 的显示器自动隐藏状态栏：
 
 **`~/.config/caelestia/monitors/DP-1/shell.json`**
 
@@ -220,37 +219,35 @@ For example, to automatically hide the bar on the monitor named `DP-1`:
 ```
 
 > [!NOTE]
-> Not all options respect per-monitor overrides. Most notably, the following options will only read
-> from the global config, and ignore the respective option in per-monitor config files.
+> 并非所有选项都支持每显示器覆盖。请特别注意，以下选项只读取全局配置，
+> 会忽略每显示器配置文件中的相应选项。
 >
-> <details><summary>Ignored options</summary>
+> <details><summary>被忽略的选项</summary>
 >
-> - `appearance`: `anim.*`, `transparency.*`
-> - `bar.tray`: `hiddenIcons`, `iconSubs`
-> - `bar.workspaces`: `ignoredTags`, `specialWorkspaceIcons`, `windowIcons`, `workspaceIcons`
-> - `dashboard`: `mediaUpdateInterval`, `resourceUpdateInterval`
-> - `general`: `apps.*`, `battery.*`, `idle.*`, `logo`
-> - `launcher`: `actionPrefix`, `actions`, `enableDangerousActions`, `favouriteApps`, `hiddenApps`, `specialPrefix`, `useFuzzy.*`, `vimKeybinds`
-> - `lock`: `enableFprint`, `enableHowdy`, `maxFprintTries`, `maxHowdyTries`, `triggerHowdyOnWake`
-> - `nexus`: `networkRescanInterval`
-> - `notifs`: `actionOnClick`, `defaultExpireTimeout`, `expire`, `fullscreen`, `fullscreenExpireTimeout`
-> - `paths`: `lyricsDir`, `wallpaperDir`
-> - `services`: `audioIncrement`, `brightnessIncrement`, `clockFormat`, `dataUnits`, `defaultPlayer`, `gpuType`, `lyricsBackend`, `maxVolume`, `playerAliases`, `sensorUnits`, `smartScheme`, `visualiserBars`, `weatherLocation`, `weatherUnits`
-> - `utilities`: `toasts.*`, `vpn.*`
+> - `appearance`：`anim.*`、`transparency.*`
+> - `bar.tray`：`hiddenIcons`、`iconSubs`
+> - `bar.workspaces`：`ignoredTags`、`specialWorkspaceIcons`、`windowIcons`、`workspaceIcons`
+> - `dashboard`：`mediaUpdateInterval`、`resourceUpdateInterval`
+> - `general`：`apps.*`、`battery.*`、`idle.*`、`logo`
+> - `launcher`：`actionPrefix`、`actions`、`enableDangerousActions`、`favouriteApps`、`hiddenApps`、`specialPrefix`、`useFuzzy.*`、`vimKeybinds`
+> - `lock`：`enableFprint`、`enableHowdy`、`maxFprintTries`、`maxHowdyTries`、`triggerHowdyOnWake`
+> - `nexus`：`networkRescanInterval`
+> - `notifs`：`actionOnClick`、`defaultExpireTimeout`、`expire`、`fullscreen`、`fullscreenExpireTimeout`
+> - `paths`：`lyricsDir`、`wallpaperDir`
+> - `services`：`audioIncrement`、`brightnessIncrement`、`clockFormat`、`dataUnits`、`defaultPlayer`、`gpuType`、`lyricsBackend`、`maxVolume`、`playerAliases`、`sensorUnits`、`smartScheme`、`visualiserBars`、`weatherLocation`、`weatherUnits`
+> - `utilities`：`toasts.*`、`vpn.*`
 >
 > </details>
 
-### Example configuration
+### 示例配置
 
 > [!WARNING]
-> The example configuration includes **ALL** configuration options in `shell.json`. It is
-> **not** recommended to copy and paste this entire configuration into `shell.json`,
-> as options or their default values may change across updates, resulting in a stale config.
+> 示例配置包含 `shell.json` 的**全部**配置选项。**不**建议将这份完整配置
+> 复制粘贴到 `shell.json` 中，因为选项或其默认值可能随版本更新而变化，导致配置过时。
 >
-> This is meant to serve as a reference of all the available options, and you should
-> <ins>only add the ones you want to change</ins> to `shell.json`.
+> 此示例仅用于展示所有可用选项，你应该<ins>只添加自己想修改的选项</ins>。
 
-<details><summary>Example config</summary>
+<details><summary>示例配置</summary>
 
 ```json
 {
@@ -945,25 +942,22 @@ For example, to automatically hide the bar on the monitor named `DP-1`:
 
 </details>
 
-### Advanced configuration
+### 高级配置
 
 > [!CAUTION]
-> Do NOT change any of these options unless you know what you are doing. These options control the
-> tokens used internally within the shell, and can cause visual issues if modified incorrectly.
-> The available options may change or be removed without notice across versions.
+> 除非你清楚自己在做什么，否则**不要**修改这些选项。这些选项控制 shell 内部使用的 token，
+> 修改不当可能导致视觉问题。可用选项可能随版本变动或被移除，恕不另行通知。
 
-A separate `~/.config/caelestia/shell-tokens.json` file allows editing the internal tokens without
-touching the source code of the shell. These tokens affect the dimensions and appearance of visual elements,
-including individual rounding, spacing, padding, font size, animation durations and curves, and the sizes of
-certain components. The appearance scale values in `shell.json` are multiplied against these base
-token values to produce the final computed values.
+单独的 `~/.config/caelestia/shell-tokens.json` 文件允许在不改动 shell 源码的情况下编辑内部 token。
+这些 token 影响视觉元素的尺寸和外观，包括各自的圆角、间距、内边距、字号、动画时长与曲线，
+以及某些组件的大小。`shell.json` 中的外观缩放值会与这些基础 token 值相乘，得到最终的计算值。
 
-Per-monitor token overrides are also available at
-`~/.config/caelestia/monitors/<monitor_name>/shell-tokens.json`.
+每显示器的 token 覆盖同样可用，位于
+`~/.config/caelestia/monitors/<显示器名>/shell-tokens.json`。
 
-### Home Manager Module
+### Home Manager 模块
 
-For NixOS users, a Home Manager module is also available.
+NixOS 用户还可以使用 Home Manager 模块。
 
 <details><summary><code>home.nix</code></summary>
 
@@ -993,57 +987,57 @@ programs.caelestia = {
 };
 ```
 
-The module automatically adds the shell to the path with **full functionality**. The CLI is not required; however, you can enable and configure it.
+该模块会自动将 shell 添加到 path，并具备**完整功能**。CLI 不是必需的；不过你也可以选择启用并配置它。
 
 </details>
 
-## FAQ
+## 常见问题
 
-### Need help or support?
+### 需要帮助或支持？
 
-You can join the Caelestia Discord server for assistance and discussion [here][discord].
+欢迎加入 Caelestia 的 Discord 服务器获取帮助和交流，地址见[这里][discord]。
 
-### I want to make my own changes to the Hyprland config!
+### 我想自己修改 Hyprland 配置！
 
-Check out the configuring section on the [dots repo](https://github.com/caelestia-dots/caelestia#configuring).
+请查看 [dots 仓库](https://github.com/caelestia-dots/caelestia#configuring)的配置（Configuring）一节。
 
-### I want to make my own changes to other stuff!
+### 我想修改其他东西！
 
-See the [manual installation](#manual-installation) section for the corresponding repo.
+请参阅对应仓库的[手动安装](#手动安装)一节。
 
-### I want to disable \_\_\_ feature!
+### 我想禁用某个功能！
 
-Please read the [configuring](#configuring) section.
-If there is no corresponding option, make a [feature request](https://github.com/caelestia-dots/shell/issues/new?template=feature.yml).
+请阅读[配置](#配置)一节。
+如果没有对应的选项，可以提交[功能请求](https://github.com/caelestia-dots/shell/issues/new?template=feature.yml)。
 
-### How do I make my colour scheme change to match my wallpaper?
+### 如何让配色方案跟随壁纸变化？
 
-Set a wallpaper via `>wallpaper` in the launcher or `caelestia wallpaper`, and set the scheme to the dynamic scheme via
-`>scheme` in the launcher or `caelestia scheme set`, e.g.:
+通过启动器中的 `>wallpaper` 或 `caelestia wallpaper` 设置壁纸，然后通过
+启动器中的 `>scheme` 或 `caelestia scheme set` 将配色方案设为动态方案，例如：
 
 ```sh
-caelestia wallpaper -f <path_to_wallpaper>
+caelestia wallpaper -f <壁纸路径>
 caelestia scheme set -n dynamic
 ```
 
-### My wallpapers aren't showing up in the launcher!
+### 启动器里看不到我的壁纸！
 
-The launcher pulls wallpapers from `~/Pictures/Wallpapers` by default. You can change this in the config. Additionally,
-the launcher only shows an odd number of wallpapers at one time. If you only have 2 wallpapers, consider getting more
-(or just putting one).
+启动器默认从 `~/Pictures/Wallpapers` 读取壁纸，你可以在配置中修改此路径。此外，
+启动器一次只显示奇数张壁纸。如果你只有 2 张壁纸，建议再多放几张
+（或者干脆只放一张）。
 
-## Credits
+## 致谢
 
-Thanks to the Hyprland Discord community (especially the homies in #rice-discussion) for all the help and suggestions
-for improving these dots!
+感谢 Hyprland Discord 社区（尤其是 #rice-discussion 频道里的各位大佬）为改进这些 dots
+提供的所有帮助和建议！
 
-A special thanks to [@outfoxxed](https://github.com/outfoxxed) for making Quickshell and the effort put into fixing issues
-and implementing various feature requests.
+特别感谢 [@outfoxxed](https://github.com/outfoxxed) 开发了 Quickshell，并付出大量精力修复问题
+以及实现各种功能请求。
 
-Another special thanks to [@end_4](https://github.com/end-4) for his [config](https://github.com/end-4/dots-hyprland)
-which helped me a lot with learning how to use Quickshell.
+再次特别感谢 [@end_4](https://github.com/end-4) 的[配置](https://github.com/end-4/dots-hyprland)，
+它对我学习 Quickshell 的用法帮助很大。
 
-Finally, another thank you to all the configs I took inspiration from (only one for now):
+最后，还要感谢所有给了我启发的配置（目前只有一个）：
 
 - [Axenide/Ax-Shell](https://github.com/Axenide/Ax-Shell)
 

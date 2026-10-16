@@ -417,7 +417,7 @@ hyprctl monitors -j | jq -r '.[].name'
         "mediaGifSpeedAdjustment": 300,
         "sessionGifSpeed": 0.7,
         "apps": {
-            "terminal": ["foot"],
+            "terminal": ["kitty"],
             "audio": ["pwvucontrol"],
             "playback": ["mpv"],
             "explorer": ["thunar"]

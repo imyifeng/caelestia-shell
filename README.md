@@ -96,7 +96,7 @@ nix run github:caelestia-dots/shell#with-cli
 - `qt6-imageformats`
 - [`qt6-m3shapes-git`](https://github.com/soramanew/m3shapes)
 - [`swappy`](https://github.com/jtheoof/swappy)
-- [`fish`](https://github.com/fish-shell/fish-shell)
+- [`zsh`](https://www.zsh.org/)
 - [`bash`](https://www.gnu.org/software/bash)
 
 构建依赖：
